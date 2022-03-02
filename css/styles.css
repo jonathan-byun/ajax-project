@@ -83,9 +83,26 @@ a.intro:hover {
   transform: scale(1.4);
 }
 
+#intro-img {
+  transition: all 1s;
+}
+
 #intro-img-2 {
   position: absolute;
   width: 25%;
   left: 62.5%;
   border: solid;
+  transition: all 1s;
+}
+
+.hidden {
+  display: none;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-100 {
+  opacity: 100%;
 }
