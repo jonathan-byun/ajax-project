@@ -82,3 +82,10 @@ a.intro:hover {
   cursor: pointer;
   transform: scale(1.4);
 }
+
+#intro-img-2 {
+  position: absolute;
+  width: 25%;
+  left: 62.5%;
+  border: solid;
+}
