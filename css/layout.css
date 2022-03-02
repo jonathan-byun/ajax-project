@@ -2,8 +2,24 @@
   display: flex;
 }
 
+.column-full {
+  flex-basis: 100%;
+}
+
 .column-half {
   flex-basis: 50%;
+}
+
+.column-two-thirds {
+  flex-basis: calc(200% / 3);
+}
+
+.column-one-third {
+  flex-basis: calc(100% / 3);
+}
+
+.column-one-fifth {
+  flex-basis: 20%;
 }
 
 .justify-center {
@@ -12,4 +28,16 @@
 
 .align-center {
   align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-right {
+  justify-content: right;
+}
+
+.text-center {
+  text-align: center;
 }

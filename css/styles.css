@@ -34,16 +34,20 @@
   margin: 25px 0;
 }
 
-.padding-2-0 {
+.padding-5 {
   padding: 5rem;
 }
 
-.font-size-3rem {
-  font-size: 3rem;
+.padding-2 {
+  padding: 2rem;
 }
 
-.font-size-2rem {
-  font-size: 2rem;
+.padding-2-2-2-0 {
+  padding: 2rem 2rem 2rem 0;
+}
+
+.padding-2-0 {
+  padding: 2rem 0;
 }
 
 .border-solid {
@@ -58,12 +62,40 @@
   width: 50%;
 }
 
+.width-1200px {
+  width: 1200px;
+}
+
+.width-70 {
+  width: 70%;
+}
+
+.height-250 {
+  height: 250%;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.width-100 {
+  width: 100%;
+}
+
 .background-color-faded-black {
   background-color: rgba(0, 0, 0, 0.486);
 }
 
+.background-color-dark-blue {
+  background-color: rgba(30, 30, 36, 0.904);
+}
+
 .white {
   color: rgb(255, 255, 255);
+}
+
+.blue {
+  color: rgb(62, 62, 255);
 }
 
 .montserrat {
@@ -72,6 +104,22 @@
 
 .hubballi {
   font-family: Hubballi, cursive;
+}
+
+.font-size-3rem {
+  font-size: 3rem;
+}
+
+.font-size-2rem {
+  font-size: 2rem;
+}
+
+.font-size-1-5rem {
+  font-size: 1.5rem;
+}
+
+.font-weight-600 {
+  font-weight: 600;
 }
 
 a.intro {
