@@ -38,12 +38,12 @@
   padding: 5rem;
 }
 
-.padding-2-1 {
-  padding: 2rem 1rem;
+.margin-2-1 {
+  margin: 2rem 1rem;
 }
 
-.padding-2-1-2-0 {
-  padding: 2rem 1rem 2rem 0;
+.margin-2-1-2-0 {
+  margin: 2rem 1rem 2rem 0;
 }
 
 .padding-2-0 {
@@ -185,4 +185,18 @@ a.intro:hover {
 
 .opacity-100 {
   opacity: 100%;
+}
+
+div[data-link="navbar-links"] > div > a {
+  transition: transform 0.2s;
+}
+
+div[data-link="navbar-links"] > div > a:hover {
+  cursor: pointer;
+  color: rgb(87, 87, 252);
+  transform: scale(1.2);
+}
+
+div[data-link="navbar-links"] > div > form > label > button:hover {
+  cursor: pointer;
 }
