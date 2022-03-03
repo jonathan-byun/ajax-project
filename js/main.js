@@ -7,10 +7,11 @@ xhr.open('GET', filmsListUrl);
 xhr.responseType = 'json';
 xhr.addEventListener('load', function () {
   ghibliMovies = xhr.response;
+  startCarousel();
+  populateFilmsList();
 });
 xhr.send();
 
-xhr.addEventListener('load', startCarousel);
 var $introImg = document.querySelector('#intro-img');
 var $introImg2 = document.querySelector('#intro-img-2');
 function startCarousel() {
@@ -77,5 +78,3 @@ function populateFilmsList() {
     }
   }
 }
-
-window.addEventListener('load', populateFilmsList);
