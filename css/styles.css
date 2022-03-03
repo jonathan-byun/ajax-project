@@ -105,6 +105,10 @@
   padding-left: 1rem;
 }
 
+.padding-2-3 {
+  padding: 2rem 3rem;
+}
+
 .margin-7-percent {
   margin: 7%;
 }
@@ -149,6 +153,10 @@
   height: 12rem;
 }
 
+.height-2rem {
+  height: 5rem;
+}
+
 .width-100 {
   width: 100%;
 }
@@ -161,7 +169,7 @@
   border-color: rgb(39, 240, 240);
 }
 
-.background-color-white {
+.background-color-turqoise {
   background-color: rgba(20, 157, 211, 0.932);
 }
 
@@ -175,6 +183,10 @@
 
 .background-color-dark-blue {
   background-color: rgba(30, 30, 36, 0.904);
+}
+
+.background-color-light-grey {
+  background-color: rgba(221, 220, 220, 0.959);
 }
 
 .white {
