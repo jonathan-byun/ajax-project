@@ -6,6 +6,10 @@
   flex-basis: 100%;
 }
 
+.column-fourth {
+  flex-basis: 25%;
+}
+
 .column-half {
   flex-basis: 50%;
 }
@@ -44,4 +48,8 @@
 
 .text-center {
   text-align: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
