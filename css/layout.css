@@ -53,3 +53,7 @@
 .flex-wrap {
   flex-wrap: wrap;
 }
+
+.align-self-end {
+  align-self: flex-end;
+}
