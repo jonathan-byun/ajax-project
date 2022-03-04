@@ -95,7 +95,10 @@ function goToFilm(e) {
     populateSingleFilm(movie);
   }
 }
+
 var $singlePageCharacters = document.querySelector('#single-page-characters');
+var $singlePageLocations = document.querySelector('#single-page-locations');
+
 function populateSingleFilm(film) {
   var $singlePageTitle = document.querySelector('#single-page-title');
   $singlePageTitle.textContent = film.title;
@@ -104,10 +107,35 @@ function populateSingleFilm(film) {
   var $singlePageDescription = document.querySelector('#single-page-description');
   $singlePageDescription.textContent = film.description;
   removeAllChildNodes($singlePageCharacters);
+  removeAllChildNodes($singlePageLocations);
   var filmUrl = film.url;
   for (let i = 0; i < film.people.length; i++) {
     pushCharacterNames(film.people[i], filmUrl);
   }
+  for (let i = 0; i < film.locations.length; i++) {
+    pushLocations(film.locations[i], filmUrl);
+  }
+}
+
+function pushLocations(link, url) {
+  var xhr3 = new XMLHttpRequest();
+  xhr3.open('Get', link);
+  xhr3.responseType = 'json';
+  xhr3.addEventListener('load', function () {
+    var response = xhr3.response;
+    if (Array.isArray(response)) {
+      for (let i = 0; i < response.length; i++) {
+        var locationUrl = response[i].films[0];
+        if (locationUrl === url) {
+          var newLocationText = document.createElement('div');
+          newLocationText.className = 'column-fourth margin-bottom-5';
+          newLocationText.textContent = response[i].name;
+          $singlePageLocations.appendChild(newLocationText);
+        }
+      }
+    }
+  });
+  xhr3.send();
 }
 
 function pushCharacterNames(link, url) {
@@ -117,25 +145,30 @@ function pushCharacterNames(link, url) {
   xhr2.addEventListener('load', function () {
     var ajaxResponse = xhr2.response;
     if (Array.isArray(ajaxResponse)) {
-      console.log(ajaxResponse);
       for (let i = 0; i < ajaxResponse.length; i++) {
         var characterUrl = ajaxResponse[i].films[0];
-        var characterName = ajaxResponse[i].name;
-        if (characterName === 'Gina') {
-          console.log('Gina in film');
-        }
         if (characterUrl === url) {
-          console.log('is in movie', ajaxResponse[i].name);
+          var newCharacterNameText = document.createElement('div');
+          newCharacterNameText.className = 'column-fourth margin-bottom-5';
+          newCharacterNameText.textContent = ajaxResponse[i].name;
+          $singlePageCharacters.appendChild(newCharacterNameText);
         }
-        var newCharacterNameText = document.createElement('div');
-        newCharacterNameText.className = 'column-fourth margin-bottom-5';
-        newCharacterNameText.textContent = ajaxResponse[i].name;
-        $singlePageCharacters.appendChild(newCharacterNameText);
+      }
+      if (!$singlePageCharacters.hasChildNodes()) {
+        var noCharacters = document.createElement('div');
+        noCharacters.className = 'justify-self-center font-size-3rem';
+        noCharacters.textContent = 'Seems someone took the names away...';
+        var noCharactersGif = document.createElement('img');
+        noCharactersGif.src = 'https://i.stack.imgur.com/2rWkC.gif';
+        $singlePageCharacters.appendChild(noCharacters);
+        $singlePageCharacters.appendChild(noCharactersGif);
       }
     } else {
-      console.log('is not array');
+      var newCharacterNameText2 = document.createElement('div');
+      newCharacterNameText2.className = 'column-fourth margin-bottom-5';
+      newCharacterNameText2.textContent = ajaxResponse.name;
+      $singlePageCharacters.appendChild(newCharacterNameText2);
     }
-    var name = xhr2.response.name;
   });
   xhr2.send();
 }
