@@ -70,9 +70,22 @@
         </div>
       </div>
     </div>
-    <div data-view="films-page" class="row justify-center">
+    <div data-view="films-page" class="row justify-center hidden">
       <div id="films-container" class="width-1400px ">
 
+      </div>
+    </div>
+    <div class="rating-modal hidden">
+      <div class="rating-modal-content">
+        <div class="row column-full justify-center">
+          <label for="user-rating" class="hubballi font-size-1-5rem margin-2-1">Rating /10</label>
+        </div>
+        <div class="row justify-center align-center">
+          <form class="row align-center">
+            <input name="user-rating" id="user-rating" type="text" placeholder="Input number">
+            <i class="fa-solid fa-check-to-slot fa-lg modal-button"></i>
+          </form>
+        </div>
       </div>
     </div>
     <div data-view="single-film-page" class="row justify-center position-relative">
@@ -87,8 +100,8 @@
                 <h2 id="single-page-title" class="font-size-2rem">Movie title</h2>
               </div>
               <div class="column-one-third row align-center justify-right">
-                <p class="font-size-1-5rem">7/10</p>
-                <i class="margin-0-15 fa-solid fa-pen-to-square fa-lg"></i>
+                <p id="rating-text" class="font-size-1-5rem">7/1</p>
+                <i id="rating-button" class="margin-0-15 fa-solid fa-pen-to-square fa-lg"></i>
               </div>
             </div>
             <div>

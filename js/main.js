@@ -178,3 +178,57 @@ function removeAllChildNodes(parent) {
     parent.removeChild(parent.firstChild);
   }
 }
+
+var $ratingButton = document.querySelector('#rating-button');
+var $ratingModal = document.querySelector('.rating-modal');
+$ratingButton.addEventListener('click', showRatingModal);
+$ratingModal.addEventListener('click', clickOutOfModal);
+
+function clickOutOfModal(e) {
+  if (e.target === $ratingModal) {
+    $ratingModal.classList.add('hidden');
+  }
+}
+
+function closeModal() {
+  $ratingModal.classList.add('hidden');
+}
+
+function showRatingModal() {
+  $ratingModal.classList.remove('hidden');
+}
+
+var $modalButton = document.querySelector('.modal-button');
+$modalButton.addEventListener('click', submitRating);
+
+function submitRating() {
+  var $userRating = document.querySelector('#user-rating').value;
+  var ratingNumber = Number($userRating);
+  var currentTitle = document.querySelector('#single-page-title').textContent;
+  if (!Number.isNaN(ratingNumber) && ratingNumber <= 10 && ratingNumber >= 0) {
+    updateRating(currentTitle, ratingNumber);
+    closeModal();
+  } else {
+    var newInput = document.createElement('input');
+    newInput.type = 'text';
+    newInput.id = 'user-rating';
+    newInput.value = 'Number/10 please';
+    var targetElement = document.querySelector('#user-rating');
+    targetElement.after(newInput);
+    targetElement.remove();
+  }
+}
+
+function updateRating(name, rating) {
+  var alreadyExists = filmData.storedRatings;
+  var ratings = filmData.ratings;
+  if (alreadyExists.indexOf(name) !== -1) {
+    ratings[alreadyExists.indexOf(name)] = rating;
+
+  } else {
+    alreadyExists.push(name);
+    ratings.push(rating);
+  }
+  var ratingText = document.querySelector('#rating-text');
+  ratingText.textContent = rating + '/10';
+}
