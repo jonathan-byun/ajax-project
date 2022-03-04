@@ -296,3 +296,11 @@ i.fa-pen-to-square:hover {
 .cursor-pointer:hover {
   cursor: pointer;
 }
+
+.transition-scale-1s {
+  transition: transform 1s;
+}
+
+.transition-scale-1s:hover {
+  transform: scale(1.1);
+}

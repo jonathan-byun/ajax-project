@@ -1,7 +1,6 @@
 
 var ghibliMovies = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
-
 var xhr = new XMLHttpRequest();
 xhr.open('GET', filmsListUrl);
 xhr.responseType = 'json';
@@ -43,7 +42,7 @@ function makeNewMovieRow() {
 
 function makeMoviePosterBlock(movie) {
   var movieColumn = document.createElement('div');
-  movieColumn.className = 'column-one-fifth';
+  movieColumn.className = 'column-one-fifth transition-scale-1s';
   var posterContainer = document.createElement('div');
   posterContainer.className = 'row align-center justify-between height-2rem';
   movieColumn.appendChild(posterContainer);
@@ -58,7 +57,7 @@ function makeMoviePosterBlock(movie) {
   imageContainer.className = 'row justify-center';
   movieColumn.appendChild(imageContainer);
   var moviePoster = document.createElement('img');
-  moviePoster.className = 'fit-to-container cursor-pointer';
+  moviePoster.className = 'fit-to-container cursor-pointer ';
   moviePoster.src = movie.image;
   moviePoster.dataset.filmImage = movie.image;
   imageContainer.appendChild(moviePoster);
@@ -96,7 +95,7 @@ function goToFilm(e) {
     populateSingleFilm(movie);
   }
 }
-
+var $singlePageCharacters = document.querySelector('#single-page-characters');
 function populateSingleFilm(film) {
   var $singlePageTitle = document.querySelector('#single-page-title');
   $singlePageTitle.textContent = film.title;
@@ -104,4 +103,45 @@ function populateSingleFilm(film) {
   $singlePagePoster.src = film.image;
   var $singlePageDescription = document.querySelector('#single-page-description');
   $singlePageDescription.textContent = film.description;
+  removeAllChildNodes($singlePageCharacters);
+  var filmUrl = film.url;
+  for (let i = 0; i < film.people.length; i++) {
+    pushCharacterNames(film.people[i], filmUrl);
+  }
+}
+
+function pushCharacterNames(link, url) {
+  var xhr2 = new XMLHttpRequest();
+  xhr2.open('GET', link);
+  xhr2.responseType = 'json';
+  xhr2.addEventListener('load', function () {
+    var ajaxResponse = xhr2.response;
+    if (Array.isArray(ajaxResponse)) {
+      console.log(ajaxResponse);
+      for (let i = 0; i < ajaxResponse.length; i++) {
+        var characterUrl = ajaxResponse[i].films[0];
+        var characterName = ajaxResponse[i].name;
+        if (characterName === 'Gina') {
+          console.log('Gina in film');
+        }
+        if (characterUrl === url) {
+          console.log('is in movie', ajaxResponse[i].name);
+        }
+        var newCharacterNameText = document.createElement('div');
+        newCharacterNameText.className = 'column-fourth margin-bottom-5';
+        newCharacterNameText.textContent = ajaxResponse[i].name;
+        $singlePageCharacters.appendChild(newCharacterNameText);
+      }
+    } else {
+      console.log('is not array');
+    }
+    var name = xhr2.response.name;
+  });
+  xhr2.send();
+}
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
