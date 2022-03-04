@@ -7,10 +7,11 @@ xhr.open('GET', filmsListUrl);
 xhr.responseType = 'json';
 xhr.addEventListener('load', function () {
   ghibliMovies = xhr.response;
+  startCarousel();
+  populateFilmsList();
 });
 xhr.send();
 
-xhr.addEventListener('load', startCarousel);
 var $introImg = document.querySelector('#intro-img');
 var $introImg2 = document.querySelector('#intro-img-2');
 function startCarousel() {
@@ -48,6 +49,8 @@ function makeMoviePosterBlock(movie) {
   movieColumn.appendChild(posterContainer);
   var movieTitle = document.createElement('h2');
   movieTitle.textContent = movie.title;
+  movieTitle.className = 'cursor-pointer';
+  movieTitle.dataset.filmTitle = movie.title;
   posterContainer.appendChild(movieTitle);
   var rating = document.createElement('h3');
   posterContainer.appendChild(rating);
@@ -55,20 +58,24 @@ function makeMoviePosterBlock(movie) {
   imageContainer.className = 'row justify-center';
   movieColumn.appendChild(imageContainer);
   var moviePoster = document.createElement('img');
-  moviePoster.className = 'fit-to-container';
+  moviePoster.className = 'fit-to-container cursor-pointer';
   moviePoster.src = movie.image;
+  moviePoster.dataset.filmImage = movie.image;
   imageContainer.appendChild(moviePoster);
   return movieColumn;
 }
 
 function populateFilmsList() {
   var rowCounter = 0;
+  var movieCounter = 0;
   var $filmsContainer = document.querySelector('#films-container');
   for (let i = 0; i < ghibliMovies.length; i++) {
     if (rowCounter === 0) {
       var newRow = makeNewMovieRow();
     }
     var newMovieColumn = makeMoviePosterBlock(ghibliMovies[i]);
+    newMovieColumn.dataset.indexOrder = movieCounter;
+    movieCounter++;
     newRow.appendChild(newMovieColumn);
     rowCounter++;
     if (rowCounter === 4) {
@@ -78,4 +85,23 @@ function populateFilmsList() {
   }
 }
 
-window.addEventListener('load', populateFilmsList);
+var $filmsContainer = document.querySelector('#films-container');
+$filmsContainer.addEventListener('click', goToFilm);
+
+function goToFilm(e) {
+  if (e.target.getAttribute('data-film-title') !== null || e.target.getAttribute('data-film-image') !== null) {
+    var targetContainer = e.target.closest('[data-index-order]');
+    var movieNumber = targetContainer.getAttribute('data-index-order');
+    var movie = ghibliMovies[movieNumber];
+    populateSingleFilm(movie);
+  }
+}
+
+function populateSingleFilm(film) {
+  var $singlePageTitle = document.querySelector('#single-page-title');
+  $singlePageTitle.textContent = film.title;
+  var $singlePagePoster = document.querySelector('#single-page-poster');
+  $singlePagePoster.src = film.image;
+  var $singlePageDescription = document.querySelector('#single-page-description');
+  $singlePageDescription.textContent = film.description;
+}

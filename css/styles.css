@@ -109,8 +109,8 @@
   padding: 2rem 3rem;
 }
 
-.margin-7-percent {
-  margin: 7%;
+.margin-10-7-percent {
+  margin: 10% 7%;
 }
 
 .border-solid {
@@ -233,6 +233,10 @@
   font-weight: 600;
 }
 
+.word-spacing-10px {
+  word-spacing: 10px;
+}
+
 a.intro {
   transition: transform 0.5s;
 }
@@ -283,4 +287,12 @@ div[data-link="navbar-links"] > div > form > label > button:hover {
 i.fa-pen-to-square:hover {
   cursor: pointer;
   transform: scale(1.2);
+}
+
+.cursor-pointer {
+  cursor: auto;
+}
+
+.cursor-pointer:hover {
+  cursor: pointer;
 }
