@@ -57,3 +57,7 @@
 .align-self-end {
   align-self: flex-end;
 }
+
+.justify-self-center {
+  justify-self: center;
+}
