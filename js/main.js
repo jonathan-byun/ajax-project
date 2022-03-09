@@ -303,4 +303,17 @@ function updateComment(name) {
     storedComments.push(name);
     commentsArray.push(newEntry);
   }
+  var newComment = document.createElement('div');
+  newComment.className = 'background-color-light-grey margin-right-2rem border-radius-1rem row justify-between align-center margin-25px-0';
+  var textContainer = document.createElement('div');
+  textContainer.className = '';
+  var newCommentText = document.createElement('p');
+  newCommentText.textContent = $commentText.value;
+  newCommentText.className = 'padding-2-3 width-100 overflow-wrap-anywhere';
+  var newDeleteIcon = document.createElement('i');
+  newDeleteIcon.className = 'fa-solid fa-circle-minus fa-lg margin-right-2rem';
+  newComment.appendChild(textContainer);
+  textContainer.appendChild(newCommentText);
+  newComment.appendChild(newDeleteIcon);
+  $singlePageComments.insertBefore(newComment, $singlePageComments.firstChild);
 }
