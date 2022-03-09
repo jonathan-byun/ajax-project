@@ -120,6 +120,7 @@ function populateSingleFilm(film, index) {
   removeAllChildNodes($singlePageCharacters);
   removeAllChildNodes($singlePageLocations);
   removeAllChildNodes($singlePageComments);
+  $commentText.value = '';
   var filmUrl = film.url;
   for (let i = 0; i < film.people.length; i++) {
     pushCharacterNames(film.people[i], filmUrl);
@@ -217,11 +218,14 @@ function getComments(index) {
   if (commentsArray[index] !== undefined) {
     for (let i = 0; i < commentsArray[index].length; i++) {
       var newCommentDiv = document.createElement('div');
-      newCommentDiv.className = 'background-color-light-grey margin-right-2rem border-radius-1rem';
+      newCommentDiv.className = 'background-color-light-grey margin-right-2rem border-radius-1rem row justify-between align-center margin-25px-0 comment';
       var newCommentP = document.createElement('p');
-      newCommentP.className = 'padding-2-3';
+      newCommentP.className = 'padding-2-3 width-100 overflow-wrap-anywhere';
       newCommentP.textContent = commentsArray[index][i];
       newCommentDiv.appendChild(newCommentP);
+      var newDeleteIcon = document.createElement('i');
+      newDeleteIcon.className = 'fa-solid fa-circle-minus fa-lg margin-right-2rem';
+      newCommentDiv.appendChild(newDeleteIcon);
       $singlePageComments.appendChild(newCommentDiv);
     }
   }
@@ -293,16 +297,27 @@ function updateComment(index) {
     commentsArray[index] = newCommentArray;
   }
   var newComment = document.createElement('div');
-  newComment.className = 'background-color-light-grey margin-right-2rem border-radius-1rem row justify-between align-center margin-25px-0';
-  var textContainer = document.createElement('div');
-  textContainer.className = '';
+  newComment.className = 'background-color-light-grey margin-right-2rem border-radius-1rem row justify-between align-center margin-25px-0 comment';
   var newCommentText = document.createElement('p');
   newCommentText.textContent = $commentText.value;
   newCommentText.className = 'padding-2-3 width-100 overflow-wrap-anywhere';
   var newDeleteIcon = document.createElement('i');
   newDeleteIcon.className = 'fa-solid fa-circle-minus fa-lg margin-right-2rem';
-  newComment.appendChild(textContainer);
-  textContainer.appendChild(newCommentText);
+  newComment.appendChild(newCommentText);
   newComment.appendChild(newDeleteIcon);
   $singlePageComments.insertBefore(newComment, $singlePageComments.firstChild);
 }
+
+// $singlePageComments.addEventListener('click', deleteButtonisClicked);
+// function deleteButtonisClicked(e) {
+//   if (e.target.classList.contains('fa-circle-minus')) {
+//     var currentDataIndex = document.querySelector('#single-page').getAttribute('data-single-index');
+//     var targetElement = e.parentElement;
+//     deleteComment('data-single-index');
+//   }
+// }
+
+// function deleteComment(index, commentIndex) {
+//   var commentsArray = filmData.comments[index];
+//   commentsArray.splice(commentIndex, 1);
+// }
