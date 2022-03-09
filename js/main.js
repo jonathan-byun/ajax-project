@@ -296,7 +296,7 @@ function updateComment(name) {
   var storedComments = filmData.storedComments;
   var commentsArray = filmData.comments;
   if (storedComments.indexOf(name) !== -1) {
-    commentsArray[storedComments.indexOf(name)].push($commentText.value);
+    commentsArray[storedComments.indexOf(name)].unshift($commentText.value);
   } else {
     var newEntry = [];
     newEntry.push($commentText.value);
