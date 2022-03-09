@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div data-view="films-page" class="row justify-center hidden">
+    <div data-view="films-page" class="row justify-center">
       <div id="films-container" class="width-1400px ">
 
       </div>
@@ -127,18 +127,18 @@
           <div class="row">
             <form class="row width-100">
               <label class="width-100">
-                <textarea style="resize: none;" class="width-100 height-12rem">Comment</textarea>
+                <textarea id="comment-text" style="resize: none;" class="width-100 height-12rem" placeholder="Comment"></textarea>
               </label>
             </form>
           </div>
           <div class="row justify-right align-center margin-2-1 back">
-            <div class="row align-center background-color-turqoise hubballi padding-0-2 border-radius-1rem">
+            <div id="comment-button" class="comment-button row align-center background-color-turqoise hubballi padding-0-2 border-radius-1rem">
               <i class="fa-solid fa-comments fa-xl"></i>
-              <p class="font-size-1-25rem ">Comment</p>
+              <p class="font-size-1-25rem">Comment</p>
             </div>
           </div>
           <ul style="list-style: none;">
-            <li>
+            <li id="single-page-comments">
               <div class="background-color-light-grey margin-right-2rem border-radius-1rem">
                 <p class="padding-2-3">hi</p>
               </div>

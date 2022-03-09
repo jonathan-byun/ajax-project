@@ -1,4 +1,4 @@
-
+/* global filmData */
 var ghibliMovies = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
 var xhr = new XMLHttpRequest();
@@ -11,10 +11,17 @@ xhr.addEventListener('load', function () {
 });
 xhr.send();
 
+var IntroIntervalID;
+
 var $introImg = document.querySelector('#intro-img');
 var $introImg2 = document.querySelector('#intro-img-2');
 function startCarousel() {
   var IntroIntervalID = setInterval(switchImage, 3000);
+  return IntroIntervalID;
+}
+
+function stopCarousel() {
+  clearInterval(IntroIntervalID);
 }
 
 var currentImageNumber = 0;
@@ -98,8 +105,10 @@ function goToFilm(e) {
 
 var $singlePageCharacters = document.querySelector('#single-page-characters');
 var $singlePageLocations = document.querySelector('#single-page-locations');
+var $singlePageComments = document.querySelector('#single-page-comments');
 
 function populateSingleFilm(film) {
+  stopCarousel();
   var $singlePageTitle = document.querySelector('#single-page-title');
   $singlePageTitle.textContent = film.title;
   var $singlePagePoster = document.querySelector('#single-page-poster');
@@ -108,6 +117,7 @@ function populateSingleFilm(film) {
   $singlePageDescription.textContent = film.description;
   removeAllChildNodes($singlePageCharacters);
   removeAllChildNodes($singlePageLocations);
+  removeAllChildNodes($singlePageComments);
   var filmUrl = film.url;
   for (let i = 0; i < film.people.length; i++) {
     pushCharacterNames(film.people[i], filmUrl);
@@ -115,6 +125,8 @@ function populateSingleFilm(film) {
   for (let i = 0; i < film.locations.length; i++) {
     pushLocations(film.locations[i], filmUrl);
   }
+  getMovieRating(film.title);
+  getComments(film.title);
 }
 
 function pushLocations(link, url) {
@@ -132,6 +144,15 @@ function pushLocations(link, url) {
           newLocationText.textContent = response[i].name;
           $singlePageLocations.appendChild(newLocationText);
         }
+      }
+      if (!$singlePageLocations.hasChildNodes()) {
+        var noLocations = document.createElement('div');
+        noLocations.className = 'justify-self-center font-size-3rem column-full';
+        noLocations.textContent = "Don't see any locations...";
+        var noLocationsGif = document.createElement('img');
+        noLocationsGif.src = 'https://66.media.tumblr.com/e79fca60b7e45ebc2ff25c8fa2d1306d/2553a1be7ff3b928-b4/s540x810/c8c5af2b5773af62aa42c2a1b503468d08f39a90.gif';
+        $singlePageLocations.appendChild(noLocations);
+        $singlePageLocations.appendChild(noLocationsGif);
       }
     }
   });
@@ -176,6 +197,34 @@ function pushCharacterNames(link, url) {
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
+  }
+}
+
+function getMovieRating(name) {
+  var alreadyExists = filmData.storedRatings;
+  var filmPlace = alreadyExists.indexOf(name);
+  var ratingText = document.querySelector('#rating-text');
+  if (filmPlace !== -1) {
+    ratingText.textContent = filmData.ratings[filmPlace] + '/10';
+  } else {
+    ratingText.textContent = '/10';
+  }
+}
+
+function getComments(name) {
+  var storedComments = filmData.storedComments;
+  var commentsArray = filmData.comments;
+  var commentLocation = storedComments.indexOf(name);
+  if (commentLocation !== -1) {
+    for (let i = 0; i < commentsArray[commentLocation].length; i++) {
+      var newCommentDiv = document.createElement('div');
+      newCommentDiv.className = 'background-color-light-grey margin-right-2rem border-radius-1rem';
+      var newCommentP = document.createElement('p');
+      newCommentP.className = 'padding-2-3';
+      newCommentP.textContent = commentsArray[commentLocation][i];
+      newCommentDiv.appendChild(newCommentP);
+      $singlePageComments.appendChild(newCommentDiv);
+    }
   }
 }
 
@@ -231,4 +280,27 @@ function updateRating(name, rating) {
   }
   var ratingText = document.querySelector('#rating-text');
   ratingText.textContent = rating + '/10';
+}
+
+var $commentButton = document.querySelector('#comment-button');
+$commentButton.addEventListener('click', submitComment);
+var $commentText = document.querySelector('#comment-text');
+
+function submitComment() {
+  var currentTitle = document.querySelector('#single-page-title');
+  updateComment(currentTitle.textContent);
+  $commentText.value = '';
+}
+
+function updateComment(name) {
+  var storedComments = filmData.storedComments;
+  var commentsArray = filmData.comments;
+  if (storedComments.indexOf(name) !== -1) {
+    commentsArray[storedComments.indexOf(name)].push($commentText.value);
+  } else {
+    var newEntry = [];
+    newEntry.push($commentText.value);
+    storedComments.push(name);
+    commentsArray.push(newEntry);
+  }
 }
