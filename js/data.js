@@ -1,8 +1,6 @@
 /* exported filmData */
 var filmData = {
-  storedRatings: [],
   ratings: [],
-  storedComments: [],
   comments: []
 };
 var window = document.querySelector('window');
