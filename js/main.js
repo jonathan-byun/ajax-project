@@ -1,4 +1,4 @@
-
+/* global filmData */
 var ghibliMovies = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
 var xhr = new XMLHttpRequest();
@@ -11,10 +11,17 @@ xhr.addEventListener('load', function () {
 });
 xhr.send();
 
+var IntroIntervalID;
+
 var $introImg = document.querySelector('#intro-img');
 var $introImg2 = document.querySelector('#intro-img-2');
 function startCarousel() {
   var IntroIntervalID = setInterval(switchImage, 3000);
+  return IntroIntervalID;
+}
+
+function stopCarousel() {
+  clearInterval(IntroIntervalID);
 }
 
 var currentImageNumber = 0;
@@ -84,22 +91,32 @@ function populateFilmsList() {
   }
 }
 
+var $filmsPage = document.querySelector('[data-view="films-page"]');
 var $filmsContainer = document.querySelector('#films-container');
 $filmsContainer.addEventListener('click', goToFilm);
 
 function goToFilm(e) {
   if (e.target.getAttribute('data-film-title') !== null || e.target.getAttribute('data-film-image') !== null) {
+    hideCurrentPage();
+    showSingleFilmsPage();
     var targetContainer = e.target.closest('[data-index-order]');
     var movieNumber = targetContainer.getAttribute('data-index-order');
     var movie = ghibliMovies[movieNumber];
-    populateSingleFilm(movie);
+    populateSingleFilm(movie, movieNumber);
   }
 }
 
+var $homePageLinksContainer = document.querySelector('#home-page-links-container');
+var $navbar = document.querySelector('[data-view="navbar"]');
+var $introPage = document.querySelector('.intro-page');
 var $singlePageCharacters = document.querySelector('#single-page-characters');
 var $singlePageLocations = document.querySelector('#single-page-locations');
+var $singlePageComments = document.querySelector('#single-page-comments');
+var $singlePage = document.querySelector('#single-page');
 
-function populateSingleFilm(film) {
+function populateSingleFilm(film, index) {
+  stopCarousel();
+  $singlePage.setAttribute('data-single-index', index);
   var $singlePageTitle = document.querySelector('#single-page-title');
   $singlePageTitle.textContent = film.title;
   var $singlePagePoster = document.querySelector('#single-page-poster');
@@ -108,6 +125,8 @@ function populateSingleFilm(film) {
   $singlePageDescription.textContent = film.description;
   removeAllChildNodes($singlePageCharacters);
   removeAllChildNodes($singlePageLocations);
+  removeAllChildNodes($singlePageComments);
+  $commentText.value = '';
   var filmUrl = film.url;
   for (let i = 0; i < film.people.length; i++) {
     pushCharacterNames(film.people[i], filmUrl);
@@ -115,6 +134,8 @@ function populateSingleFilm(film) {
   for (let i = 0; i < film.locations.length; i++) {
     pushLocations(film.locations[i], filmUrl);
   }
+  getMovieRating(index);
+  getComments(index);
 }
 
 function pushLocations(link, url) {
@@ -132,6 +153,15 @@ function pushLocations(link, url) {
           newLocationText.textContent = response[i].name;
           $singlePageLocations.appendChild(newLocationText);
         }
+      }
+      if (!$singlePageLocations.hasChildNodes()) {
+        var noLocations = document.createElement('div');
+        noLocations.className = 'justify-self-center font-size-3rem column-full';
+        noLocations.textContent = "Don't see any locations...";
+        var noLocationsGif = document.createElement('img');
+        noLocationsGif.src = 'https://66.media.tumblr.com/e79fca60b7e45ebc2ff25c8fa2d1306d/2553a1be7ff3b928-b4/s540x810/c8c5af2b5773af62aa42c2a1b503468d08f39a90.gif';
+        $singlePageLocations.appendChild(noLocations);
+        $singlePageLocations.appendChild(noLocationsGif);
       }
     }
   });
@@ -179,6 +209,35 @@ function removeAllChildNodes(parent) {
   }
 }
 
+function getMovieRating(index) {
+  var ratingText = document.querySelector('#rating-text');
+  var ratingAtIndex = filmData.ratings[index];
+  if (ratingAtIndex !== undefined) {
+    ratingText.textContent = filmData.ratings[index] + '/10';
+  } else {
+    ratingText.textContent = '/10';
+  }
+}
+
+function getComments(index) {
+  var commentsArray = filmData.comments;
+  if (commentsArray[index] !== undefined) {
+    for (let i = 0; i < commentsArray[index].storedComments.length; i++) {
+      var newCommentDiv = document.createElement('div');
+      newCommentDiv.className = 'background-color-light-grey margin-right-2rem border-radius-1rem row justify-between align-center margin-25px-0 comment';
+      newCommentDiv.setAttribute('data-comment-number', commentsArray[index].storedComments[i].commentNumber);
+      var newCommentP = document.createElement('p');
+      newCommentP.className = 'padding-2-3 width-100 overflow-wrap-anywhere';
+      newCommentP.textContent = commentsArray[index].storedComments[i].text;
+      newCommentDiv.appendChild(newCommentP);
+      var newDeleteIcon = document.createElement('i');
+      newDeleteIcon.className = 'fa-solid fa-circle-minus fa-lg margin-right-2rem cursor-pointer';
+      newCommentDiv.appendChild(newDeleteIcon);
+      $singlePageComments.appendChild(newCommentDiv);
+    }
+  }
+}
+
 var $ratingButton = document.querySelector('#rating-button');
 var $ratingModal = document.querySelector('.rating-modal');
 $ratingButton.addEventListener('click', showRatingModal);
@@ -204,9 +263,9 @@ $modalButton.addEventListener('click', submitRating);
 function submitRating() {
   var $userRating = document.querySelector('#user-rating').value;
   var ratingNumber = Number($userRating);
-  var currentTitle = document.querySelector('#single-page-title').textContent;
+  var currentDataIndex = document.querySelector('#single-page').getAttribute('data-single-index');
   if (!Number.isNaN(ratingNumber) && ratingNumber <= 10 && ratingNumber >= 0) {
-    updateRating(currentTitle, ratingNumber);
+    updateRating(currentDataIndex, ratingNumber);
     closeModal();
   } else {
     var newInput = document.createElement('input');
@@ -219,16 +278,148 @@ function submitRating() {
   }
 }
 
-function updateRating(name, rating) {
-  var alreadyExists = filmData.storedRatings;
+function updateRating(index, rating) {
   var ratings = filmData.ratings;
-  if (alreadyExists.indexOf(name) !== -1) {
-    ratings[alreadyExists.indexOf(name)] = rating;
-
-  } else {
-    alreadyExists.push(name);
-    ratings.push(rating);
-  }
+  ratings[index] = rating;
   var ratingText = document.querySelector('#rating-text');
   ratingText.textContent = rating + '/10';
+}
+
+var $commentButton = document.querySelector('#comment-button');
+$commentButton.addEventListener('click', submitComment);
+var $commentText = document.querySelector('#comment-text');
+
+function submitComment() {
+  var currentDataIndex = document.querySelector('#single-page').getAttribute('data-single-index');
+  updateComment(currentDataIndex);
+  $commentText.value = '';
+}
+
+function updateComment(index) {
+  var commentsArray = filmData.comments;
+  if (commentsArray[index] !== undefined) {
+    var arrayOfObjects = commentsArray[index].storedComments;
+    var newObject = {
+      commentNumber: commentsArray[index].numberOfComments,
+      text: $commentText.value
+    };
+    arrayOfObjects.unshift(newObject);
+    commentsArray[index].numberOfComments += 1;
+  } else {
+    var newCommentObject = {
+      numberOfComments: 1,
+      storedComments: [{
+        commentNumber: 0,
+        text: $commentText.value
+      }]
+    };
+    commentsArray[index] = newCommentObject;
+  }
+  var newComment = document.createElement('div');
+  var currentCommentNumber = commentsArray[index].numberOfComments - 1;
+  newComment.className = 'background-color-light-grey margin-right-2rem border-radius-1rem row justify-between align-center margin-25px-0 comment';
+  newComment.setAttribute('data-comment-number', currentCommentNumber);
+  var newCommentText = document.createElement('p');
+  newCommentText.textContent = $commentText.value;
+  newCommentText.className = 'padding-2-3 width-100 overflow-wrap-anywhere';
+  var newDeleteIcon = document.createElement('i');
+  newDeleteIcon.className = 'fa-solid fa-circle-minus fa-lg margin-right-2rem cursor-pointer';
+  newComment.appendChild(newCommentText);
+  newComment.appendChild(newDeleteIcon);
+  $singlePageComments.insertBefore(newComment, $singlePageComments.firstChild);
+}
+
+$singlePageComments.addEventListener('click', deleteButtonisClicked);
+function deleteButtonisClicked(e) {
+  if (e.target.classList.contains('fa-circle-minus')) {
+    var currentDataIndex = document.querySelector('#single-page').getAttribute('data-single-index');
+    var targetElement = e.target.parentElement;
+    var currentCommentIndex = targetElement.getAttribute('data-comment-number');
+    deleteCommentData(currentDataIndex, currentCommentIndex);
+    targetElement.remove();
+  }
+}
+
+function deleteCommentData(index, commentIndex) {
+  var commentsObject = filmData.comments[index];
+  var commentsLength = commentsObject.storedComments.length;
+  var deleteIndex = commentsLength - commentIndex - 1;
+  commentsObject.storedComments.splice(deleteIndex, 1);
+}
+
+var $navbarLinks = document.querySelector('[data-link="navbar-links"]');
+$navbarLinks.addEventListener('click', linkClicked);
+$homePageLinksContainer.addEventListener('click', homePageLinkClicked);
+
+function linkClicked(e) {
+  if (e.target.localName === 'a') {
+    hideCurrentPage();
+    var clickedLinkId = e.target.id;
+    switch (clickedLinkId) {
+      case 'homepage-link':
+        showHomePage();
+        break;
+      case 'films-link':
+        showFilmsPage();
+        break;
+      case 'vehicles-link':
+        showFilmsPage();
+        break;
+      case 'characters-link':
+        showFilmsPage();
+        break;
+      case 'locations-link':
+        showFilmsPage();
+        break;
+    }
+  }
+}
+
+function homePageLinkClicked(e) {
+  if (e.target.localName === 'a') {
+    toggleLinkBar();
+    hideCurrentPage();
+    var clickedLinkId = e.target.id;
+    switch (clickedLinkId) {
+      case 'intro-films-link':
+        showFilmsPage();
+        break;
+      case 'intro-characters-link':
+        showFilmsPage();
+        break;
+      case 'intro-vehicles-link':
+        showFilmsPage();
+        break;
+      case 'intro-locations-link':
+        showFilmsPage();
+        break;
+    }
+  }
+}
+
+function hideCurrentPage() {
+  var $currentPage = document.querySelector('.active');
+  $currentPage.classList.toggle('hidden');
+  $currentPage.classList.toggle('active');
+}
+
+function showFilmsPage() {
+  $filmsPage.classList.remove('hidden');
+  $filmsPage.classList.add('active');
+}
+
+function showSingleFilmsPage() {
+  $singlePage.classList.remove('hidden');
+  $singlePage.classList.add('active');
+  window.scroll(0, 0);
+}
+
+function showHomePage() {
+  $introPage.classList.remove('hidden');
+  $introPage.classList.add('active');
+  toggleLinkBar();
+}
+
+function toggleLinkBar() {
+  $navbar.classList.toggle('hidden');
 }

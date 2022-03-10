@@ -333,3 +333,16 @@ i.fa-pen-to-square:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
+
+.comment-button {
+  transition: 0.4s;
+}
+
+.comment-button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
+}

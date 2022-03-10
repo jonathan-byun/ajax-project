@@ -1,7 +1,7 @@
-/* exported data */
+/* exported filmData */
 var filmData = {
-  storedRatings: [],
-  ratings: []
+  ratings: [],
+  comments: []
 };
 var window = document.querySelector('window');
 window.addEventListener('beforeunload', function () {
