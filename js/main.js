@@ -91,11 +91,14 @@ function populateFilmsList() {
   }
 }
 
+var $filmsPage = document.querySelector('[data-view="films-page"]');
 var $filmsContainer = document.querySelector('#films-container');
 $filmsContainer.addEventListener('click', goToFilm);
 
 function goToFilm(e) {
   if (e.target.getAttribute('data-film-title') !== null || e.target.getAttribute('data-film-image') !== null) {
+    hideCurrentPage();
+    showSingleFilmsPage();
     var targetContainer = e.target.closest('[data-index-order]');
     var movieNumber = targetContainer.getAttribute('data-index-order');
     var movie = ghibliMovies[movieNumber];
@@ -103,13 +106,16 @@ function goToFilm(e) {
   }
 }
 
+var $homePageLinksContainer = document.querySelector('#home-page-links-container');
+var $navbar = document.querySelector('[data-view="navbar"]');
+var $introPage = document.querySelector('.intro-page');
 var $singlePageCharacters = document.querySelector('#single-page-characters');
 var $singlePageLocations = document.querySelector('#single-page-locations');
 var $singlePageComments = document.querySelector('#single-page-comments');
+var $singlePage = document.querySelector('#single-page');
 
 function populateSingleFilm(film, index) {
   stopCarousel();
-  var $singlePage = document.querySelector('#single-page');
   $singlePage.setAttribute('data-single-index', index);
   var $singlePageTitle = document.querySelector('#single-page-title');
   $singlePageTitle.textContent = film.title;
@@ -216,15 +222,16 @@ function getMovieRating(index) {
 function getComments(index) {
   var commentsArray = filmData.comments;
   if (commentsArray[index] !== undefined) {
-    for (let i = 0; i < commentsArray[index].length; i++) {
+    for (let i = 0; i < commentsArray[index].storedComments.length; i++) {
       var newCommentDiv = document.createElement('div');
       newCommentDiv.className = 'background-color-light-grey margin-right-2rem border-radius-1rem row justify-between align-center margin-25px-0 comment';
+      newCommentDiv.setAttribute('data-comment-number', commentsArray[index].storedComments[i].commentNumber);
       var newCommentP = document.createElement('p');
       newCommentP.className = 'padding-2-3 width-100 overflow-wrap-anywhere';
-      newCommentP.textContent = commentsArray[index][i];
+      newCommentP.textContent = commentsArray[index].storedComments[i].text;
       newCommentDiv.appendChild(newCommentP);
       var newDeleteIcon = document.createElement('i');
-      newDeleteIcon.className = 'fa-solid fa-circle-minus fa-lg margin-right-2rem';
+      newDeleteIcon.className = 'fa-solid fa-circle-minus fa-lg margin-right-2rem cursor-pointer';
       newCommentDiv.appendChild(newDeleteIcon);
       $singlePageComments.appendChild(newCommentDiv);
     }
@@ -291,33 +298,128 @@ function submitComment() {
 function updateComment(index) {
   var commentsArray = filmData.comments;
   if (commentsArray[index] !== undefined) {
-    commentsArray[index].unshift($commentText.value);
+    var arrayOfObjects = commentsArray[index].storedComments;
+    var newObject = {
+      commentNumber: commentsArray[index].numberOfComments,
+      text: $commentText.value
+    };
+    arrayOfObjects.unshift(newObject);
+    commentsArray[index].numberOfComments += 1;
   } else {
-    var newCommentArray = [$commentText.value];
-    commentsArray[index] = newCommentArray;
+    var newCommentObject = {
+      numberOfComments: 1,
+      storedComments: [{
+        commentNumber: 0,
+        text: $commentText.value
+      }]
+    };
+    commentsArray[index] = newCommentObject;
   }
   var newComment = document.createElement('div');
+  var currentCommentNumber = commentsArray[index].numberOfComments - 1;
   newComment.className = 'background-color-light-grey margin-right-2rem border-radius-1rem row justify-between align-center margin-25px-0 comment';
+  newComment.setAttribute('data-comment-number', currentCommentNumber);
   var newCommentText = document.createElement('p');
   newCommentText.textContent = $commentText.value;
   newCommentText.className = 'padding-2-3 width-100 overflow-wrap-anywhere';
   var newDeleteIcon = document.createElement('i');
-  newDeleteIcon.className = 'fa-solid fa-circle-minus fa-lg margin-right-2rem';
+  newDeleteIcon.className = 'fa-solid fa-circle-minus fa-lg margin-right-2rem cursor-pointer';
   newComment.appendChild(newCommentText);
   newComment.appendChild(newDeleteIcon);
   $singlePageComments.insertBefore(newComment, $singlePageComments.firstChild);
 }
 
-// $singlePageComments.addEventListener('click', deleteButtonisClicked);
-// function deleteButtonisClicked(e) {
-//   if (e.target.classList.contains('fa-circle-minus')) {
-//     var currentDataIndex = document.querySelector('#single-page').getAttribute('data-single-index');
-//     var targetElement = e.parentElement;
-//     deleteComment('data-single-index');
-//   }
-// }
+$singlePageComments.addEventListener('click', deleteButtonisClicked);
+function deleteButtonisClicked(e) {
+  if (e.target.classList.contains('fa-circle-minus')) {
+    var currentDataIndex = document.querySelector('#single-page').getAttribute('data-single-index');
+    var targetElement = e.target.parentElement;
+    var currentCommentIndex = targetElement.getAttribute('data-comment-number');
+    deleteCommentData(currentDataIndex, currentCommentIndex);
+    targetElement.remove();
+  }
+}
 
-// function deleteComment(index, commentIndex) {
-//   var commentsArray = filmData.comments[index];
-//   commentsArray.splice(commentIndex, 1);
-// }
+function deleteCommentData(index, commentIndex) {
+  var commentsObject = filmData.comments[index];
+  var commentsLength = commentsObject.storedComments.length;
+  var deleteIndex = commentsLength - commentIndex - 1;
+  commentsObject.storedComments.splice(deleteIndex, 1);
+}
+
+var $navbarLinks = document.querySelector('[data-link="navbar-links"]');
+$navbarLinks.addEventListener('click', linkClicked);
+$homePageLinksContainer.addEventListener('click', homePageLinkClicked);
+
+function linkClicked(e) {
+  if (e.target.localName === 'a') {
+    hideCurrentPage();
+    var clickedLinkId = e.target.id;
+    switch (clickedLinkId) {
+      case 'homepage-link':
+        showHomePage();
+        break;
+      case 'films-link':
+        showFilmsPage();
+        break;
+      case 'vehicles-link':
+        showFilmsPage();
+        break;
+      case 'characters-link':
+        showFilmsPage();
+        break;
+      case 'locations-link':
+        showFilmsPage();
+        break;
+    }
+  }
+}
+
+function homePageLinkClicked(e) {
+  if (e.target.localName === 'a') {
+    toggleLinkBar();
+    hideCurrentPage();
+    var clickedLinkId = e.target.id;
+    switch (clickedLinkId) {
+      case 'intro-films-link':
+        showFilmsPage();
+        break;
+      case 'intro-characters-link':
+        showFilmsPage();
+        break;
+      case 'intro-vehicles-link':
+        showFilmsPage();
+        break;
+      case 'intro-locations-link':
+        showFilmsPage();
+        break;
+    }
+  }
+}
+
+function hideCurrentPage() {
+  var $currentPage = document.querySelector('.active');
+  $currentPage.classList.toggle('hidden');
+  $currentPage.classList.toggle('active');
+}
+
+function showFilmsPage() {
+  $filmsPage.classList.remove('hidden');
+  $filmsPage.classList.add('active');
+}
+
+function showSingleFilmsPage() {
+  $singlePage.classList.remove('hidden');
+  $singlePage.classList.add('active');
+  window.scroll(0, 0);
+}
+
+function showHomePage() {
+  $introPage.classList.remove('hidden');
+  $introPage.classList.add('active');
+  toggleLinkBar();
+}
+
+function toggleLinkBar() {
+  $navbar.classList.toggle('hidden');
+}

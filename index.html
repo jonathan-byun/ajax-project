@@ -17,25 +17,25 @@
   <header>
   </header>
   <main>
-    <div class="intro-page hidden">
-      <img src="https://ychef.files.bbci.co.uk/976x549/p09f3lcg.jpg" alt="spirited away train" class="intro-image">
+    <div class="intro-page active">
+      <img src="https://thumbs.gfycat.com/LongBeneficialHectorsdolphin-size_restricted.gif" alt="spirited away train" class="intro-image">
       <div class="row intro-content max-height-100vh">
         <div class="margin-15-0 column-half align-center row">
-          <div class="padding-5 margin-0-15 border-solid background-color-faded-black">
+          <div id="home-page-links-container" class="padding-5 margin-0-15 border-solid background-color-faded-black">
             <div class="row justify-center">
               <h2 class="font-size-3rem white montserrat">Ghibli Journal</h2>
             </div>
             <div class="row justify-center">
-              <a class="font-size-2rem hubballi white margin-25px-0 intro">Films</a>
+              <a id="intro-films-link" class="font-size-2rem hubballi white margin-25px-0 intro">Films</a>
             </div>
             <div class="row justify-center">
-              <a class="font-size-2rem hubballi white margin-25px-0 intro">Characters</a>
+              <a id="intro-characters-link" class="font-size-2rem hubballi white margin-25px-0 intro">Characters</a>
             </div>
             <div class="row justify-center">
-              <a class="font-size-2rem hubballi white margin-25px-0 intro">Vehicles</a>
+              <a id="intro-vehicles-link" class="font-size-2rem hubballi white margin-25px-0 intro">Vehicles</a>
             </div>
             <div class="row justify-center ">
-              <a class="font-size-2rem hubballi white margin-25px-0 intro">Locations</a>
+              <a id="intro-locations-link" class="font-size-2rem hubballi white margin-25px-0 intro">Locations</a>
             </div>
           </div>
         </div>
@@ -47,15 +47,15 @@
         </div>
       </div>
     </div>
-    <div data-view="navbar" class="row justify-center">
+    <div data-view="navbar" class="row justify-center hidden">
       <div class="width-100 ">
         <div data-link="navbar-links" class="column-full row justify-between background-color-dark-blue padding-0-100px">
           <div class="font-size-1-5rem column-two-thirds row">
-            <a class="hubballi white margin-2-1-2-0 font-size-2rem">Ghiblis</a>
-            <a class="blue montserrat font-weight-600 margin-2-1">Films</a>
-            <a class="blue montserrat font-weight-600 margin-2-1">Vehicles</a>
-            <a class="blue montserrat font-weight-600 margin-2-1">Characters</a>
-            <a class="blue montserrat font-weight-600 margin-2-1">Locations</a>
+            <a id="homepage-link" class="hubballi white margin-2-1-2-0 font-size-2rem">Ghiblis</a>
+            <a id="films-link" class="blue montserrat font-weight-600 margin-2-1">Films</a>
+            <a id="vehicles-link" class="blue montserrat font-weight-600 margin-2-1">Vehicles</a>
+            <a id="characters-link" class="blue montserrat font-weight-600 margin-2-1">Characters</a>
+            <a id="locations-link" class="blue montserrat font-weight-600 margin-2-1">Locations</a>
           </div>
           <div class="column-half padding-2-0 row justify-right align-center">
             <form class="width-100 height-200 row justify-right align-center">
@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div data-view="films-page" class="row justify-center">
+    <div data-view="films-page" class="row justify-center hidden">
       <div id="films-container" class="width-1400px ">
 
       </div>
@@ -88,7 +88,7 @@
         </div>
       </div>
     </div>
-    <div data-view="single-film-page" id="single-page" class="row justify-center position-relative">
+    <div data-view="single-film-page" id="single-page" class="row justify-center position-relative hidden">
       <img src="https://fictionmachine.files.wordpress.com/2015/04/totoro_head-e1601954323644.jpg" alt="girl chases totoro through woods" class="single-film-page-background">
       <img src="https://deadline.com/wp-content/uploads/2021/11/img_2947.jpg" alt="chihiro shares riceball with haku" class="single-film-page-background-2">
       <img src="https://i.guim.co.uk/img/media/da01a9959107c4fb0abb65fa8840ae01bbb24dfa/7_81_4761_2856/master/4761.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=4b3d2d2721de19917081a3fe51280c32" alt="princess mononoke riding her wolf" class="single-film-page-background-3">
