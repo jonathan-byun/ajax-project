@@ -1,5 +1,6 @@
 /* global filmData */
 var ghibliMovies = [];
+// var ghibliVehiclesList = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
 var xhr = new XMLHttpRequest();
 xhr.open('GET', filmsListUrl);
@@ -10,6 +11,14 @@ xhr.addEventListener('load', function () {
   populateFilmsList();
 });
 xhr.send();
+
+// var xhrVehicles = new XMLHttpRequest();
+// xhrVehicles.open('GET', 'https://ghibliapi.herokuapp.com/vehicles');
+// xhrVehicles.responseType = 'json';
+// xhrVehicles.addEventListener('load', function () {
+//   ghibliVehiclesList = xhrVehicles.response;
+// });
+// xhrVehicles.send();
 
 var IntroIntervalID;
 
@@ -90,6 +99,12 @@ function populateFilmsList() {
     }
   }
 }
+
+// function populateVehiclesList() {
+//   for (let i = 0; i < ghibliVehiclesList.length; i++) {
+
+//   }
+// }
 
 var $filmsPage = document.querySelector('[data-view="films-page"]');
 var $filmsContainer = document.querySelector('#films-container');
