@@ -1,6 +1,6 @@
 /* global filmData */
 var ghibliMovies = [];
-// var ghibliVehiclesList = [];
+var ghibliVehiclesList = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
 var xhr = new XMLHttpRequest();
 xhr.open('GET', filmsListUrl);
@@ -12,13 +12,13 @@ xhr.addEventListener('load', function () {
 });
 xhr.send();
 
-// var xhrVehicles = new XMLHttpRequest();
-// xhrVehicles.open('GET', 'https://ghibliapi.herokuapp.com/vehicles');
-// xhrVehicles.responseType = 'json';
-// xhrVehicles.addEventListener('load', function () {
-//   ghibliVehiclesList = xhrVehicles.response;
-// });
-// xhrVehicles.send();
+var xhrVehicles = new XMLHttpRequest();
+xhrVehicles.open('GET', 'https://ghibliapi.herokuapp.com/vehicles');
+xhrVehicles.responseType = 'json';
+xhrVehicles.addEventListener('load', function () {
+  ghibliVehiclesList = xhrVehicles.response;
+});
+xhrVehicles.send();
 
 var IntroIntervalID;
 
@@ -100,11 +100,12 @@ function populateFilmsList() {
   }
 }
 
-// function populateVehiclesList() {
-//   for (let i = 0; i < ghibliVehiclesList.length; i++) {
-
-//   }
-// }
+function populateVehiclesList() {
+  for (let i = 0; i < ghibliVehiclesList.length; i++) {
+    var newVehicleRow = document.createElement('div');
+    newVehicleRow.className = 'row justify-around';
+  }
+}
 
 var $filmsPage = document.querySelector('[data-view="films-page"]');
 var $filmsContainer = document.querySelector('#films-container');
