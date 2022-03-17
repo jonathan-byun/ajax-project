@@ -2,6 +2,7 @@
 var ghibliMovies = [];
 var ghibliVehiclesList = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
+const $vehiclesList = document.querySelector('#vehicles-list');
 var xhr = new XMLHttpRequest();
 xhr.open('GET', filmsListUrl);
 xhr.responseType = 'json';
@@ -103,7 +104,9 @@ function populateFilmsList() {
 function populateVehiclesList() {
   for (let i = 0; i < ghibliVehiclesList.length; i++) {
     var newVehicleRow = document.createElement('div');
-    newVehicleRow.className = 'row justify-around';
+    newVehicleRow.className = 'margin-25px-0';
+    newVehicleRow.textContent = ghibliVehiclesList[i].name + ' - ' + ghibliVehiclesList[i].description;
+    $vehiclesList.appendChild(newVehicleRow);
   }
 }
 
