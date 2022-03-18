@@ -1,6 +1,7 @@
 /* global filmData */
 var ghibliMovies = [];
 var ghibliVehiclesList = [];
+var ghibliCharacters = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
 const $vehiclesList = document.querySelector('#vehicles-list');
 var xhr = new XMLHttpRequest();
@@ -18,8 +19,17 @@ xhrVehicles.open('GET', 'https://ghibliapi.herokuapp.com/vehicles');
 xhrVehicles.responseType = 'json';
 xhrVehicles.addEventListener('load', function () {
   ghibliVehiclesList = xhrVehicles.response;
+  populateVehiclesList();
 });
 xhrVehicles.send();
+
+var xhrCharacters = new XMLHttpRequest();
+xhrCharacters.open('GET', 'https://ghibliapi.herokuapp.com/people');
+xhrCharacters.responseType = 'json';
+xhrCharacters.addEventListener('load', function () {
+  ghibliCharacters = xhrCharacters.response;
+});
+xhrCharacters.send();
 
 var IntroIntervalID;
 
@@ -382,7 +392,7 @@ function linkClicked(e) {
         showFilmsPage();
         break;
       case 'vehicles-link':
-        showFilmsPage();
+        showVehiclesPage();
         break;
       case 'characters-link':
         showFilmsPage();
@@ -437,6 +447,12 @@ function showHomePage() {
   $introPage.classList.remove('hidden');
   $introPage.classList.add('active');
   toggleLinkBar();
+}
+
+function showVehiclesPage() {
+  var $vehiclesPage = document.querySelector('[data-view="vehicles-page"]');
+  $vehiclesPage.classList.remove('hidden');
+  $vehiclesPage.classList.add('active');
 }
 
 function toggleLinkBar() {
