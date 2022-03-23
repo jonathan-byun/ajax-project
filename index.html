@@ -34,9 +34,7 @@
             <div class="row justify-center">
               <a id="intro-vehicles-link" class="font-size-2rem hubballi white margin-25px-0 intro">Vehicles</a>
             </div>
-            <div class="row justify-center ">
-              <a id="intro-locations-link" class="font-size-2rem hubballi white margin-25px-0 intro">Locations</a>
-            </div>
+
           </div>
         </div>
         <div class="column-half row justify-center align-center">
@@ -55,7 +53,7 @@
             <a id="films-link" class="blue montserrat font-weight-600 margin-2-1">Films</a>
             <a id="vehicles-link" class="blue montserrat font-weight-600 margin-2-1">Vehicles</a>
             <a id="characters-link" class="blue montserrat font-weight-600 margin-2-1">Characters</a>
-            <a id="locations-link" class="blue montserrat font-weight-600 margin-2-1">Locations</a>
+
           </div>
           <div class="column-half padding-2-0 row justify-right align-center">
             <form class="width-100 height-200 row justify-right align-center">
@@ -70,8 +68,9 @@
         </div>
       </div>
     </div>
-    <div data-view="films-page" class="row justify-center hidden">
-      <div id="films-container" class="width-1400px ">
+    <div data-view="films-page" class="row justify-center hidden position-relative background-color-faded-white">
+      <img src="https://i.pinimg.com/originals/35/4e/5a/354e5a7f88488a2f4b5313ee2a534a75.jpg" class="film-page-background">
+      <div id="films-container" class="width-1400px position-relative">
 
       </div>
     </div>
@@ -145,6 +144,18 @@
             </li>
           </ul>
         </div>
+      </div>
+    </div>
+    <div data-view="vehicles-page" class="hidden">
+      <div class="background-color-faded-white margin-25px-0 padding-3-5">
+        <h2 class="hubballi font-size-2rem">Vehicles</h2>
+        <div id="vehicles-list" class="row flex-wrap font-size-1-25rem">
+        </div>
+      </div>
+    </div>
+    <div data-view="characters-page">
+      <div class="background-color-faded-white margin-25px-0 padding3-5">
+
       </div>
     </div>
   </main>

@@ -1,6 +1,9 @@
 /* global filmData */
 var ghibliMovies = [];
+var ghibliVehiclesList = [];
+var ghibliCharacters = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
+const $vehiclesList = document.querySelector('#vehicles-list');
 var xhr = new XMLHttpRequest();
 xhr.open('GET', filmsListUrl);
 xhr.responseType = 'json';
@@ -10,6 +13,23 @@ xhr.addEventListener('load', function () {
   populateFilmsList();
 });
 xhr.send();
+
+var xhrVehicles = new XMLHttpRequest();
+xhrVehicles.open('GET', 'https://ghibliapi.herokuapp.com/vehicles');
+xhrVehicles.responseType = 'json';
+xhrVehicles.addEventListener('load', function () {
+  ghibliVehiclesList = xhrVehicles.response;
+  populateVehiclesList();
+});
+xhrVehicles.send();
+
+var xhrCharacters = new XMLHttpRequest();
+xhrCharacters.open('GET', 'https://ghibliapi.herokuapp.com/people');
+xhrCharacters.responseType = 'json';
+xhrCharacters.addEventListener('load', function () {
+  ghibliCharacters = xhrCharacters.response;
+});
+xhrCharacters.send();
 
 var IntroIntervalID;
 
@@ -88,6 +108,15 @@ function populateFilmsList() {
       $filmsContainer.appendChild(newRow);
       rowCounter = 0;
     }
+  }
+}
+
+function populateVehiclesList() {
+  for (let i = 0; i < ghibliVehiclesList.length; i++) {
+    var newVehicleRow = document.createElement('div');
+    newVehicleRow.className = 'margin-25px-0';
+    newVehicleRow.textContent = ghibliVehiclesList[i].name + ' - ' + ghibliVehiclesList[i].description;
+    $vehiclesList.appendChild(newVehicleRow);
   }
 }
 
@@ -363,7 +392,7 @@ function linkClicked(e) {
         showFilmsPage();
         break;
       case 'vehicles-link':
-        showFilmsPage();
+        showVehiclesPage();
         break;
       case 'characters-link':
         showFilmsPage();
@@ -418,6 +447,12 @@ function showHomePage() {
   $introPage.classList.remove('hidden');
   $introPage.classList.add('active');
   toggleLinkBar();
+}
+
+function showVehiclesPage() {
+  var $vehiclesPage = document.querySelector('[data-view="vehicles-page"]');
+  $vehiclesPage.classList.remove('hidden');
+  $vehiclesPage.classList.add('active');
 }
 
 function toggleLinkBar() {
