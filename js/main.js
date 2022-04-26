@@ -1,9 +1,7 @@
 /* global filmData */
 var ghibliMovies = [];
 var ghibliVehiclesList = [];
-var ghibliCharacters = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
-const $vehiclesList = document.querySelector('#vehicles-list');
 var xhr = new XMLHttpRequest();
 xhr.open('GET', filmsListUrl);
 xhr.responseType = 'json';
@@ -22,14 +20,6 @@ xhrVehicles.addEventListener('load', function () {
   populateVehiclesList();
 });
 xhrVehicles.send();
-
-var xhrCharacters = new XMLHttpRequest();
-xhrCharacters.open('GET', 'https://ghibliapi.herokuapp.com/people');
-xhrCharacters.responseType = 'json';
-xhrCharacters.addEventListener('load', function () {
-  ghibliCharacters = xhrCharacters.response;
-});
-xhrCharacters.send();
 
 var IntroIntervalID;
 
@@ -63,7 +53,7 @@ function switchImage() {
 
 function makeNewMovieRow() {
   var newMovieRow = document.createElement('div');
-  newMovieRow.className = 'row justify-around';
+  newMovieRow.className = 'row justify-around flex-wrap';
   return newMovieRow;
 }
 
@@ -112,11 +102,14 @@ function populateFilmsList() {
 }
 
 function populateVehiclesList() {
+  const $vehiclesList = document.querySelector('#vehicles-list');
   for (let i = 0; i < ghibliVehiclesList.length; i++) {
-    var newVehicleRow = document.createElement('div');
-    newVehicleRow.className = 'margin-25px-0';
-    newVehicleRow.textContent = ghibliVehiclesList[i].name + ' - ' + ghibliVehiclesList[i].description;
-    $vehiclesList.appendChild(newVehicleRow);
+    const newColumn = document.createElement('div');
+    const newText = document.createElement('h2');
+    newText.className = 'margin-2-1';
+    newText.textContent = ghibliVehiclesList[i].name;
+    newColumn.appendChild(newText);
+    $vehiclesList.appendChild(newColumn);
   }
 }
 
@@ -417,7 +410,7 @@ function homePageLinkClicked(e) {
         showFilmsPage();
         break;
       case 'intro-vehicles-link':
-        showFilmsPage();
+        showVehiclesPage();
         break;
       case 'intro-locations-link':
         showFilmsPage();
@@ -450,7 +443,7 @@ function showHomePage() {
 }
 
 function showVehiclesPage() {
-  var $vehiclesPage = document.querySelector('[data-view="vehicles-page"]');
+  const $vehiclesPage = document.querySelector('[data-view="vehicles-page"]');
   $vehiclesPage.classList.remove('hidden');
   $vehiclesPage.classList.add('active');
 }

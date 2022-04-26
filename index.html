@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Hubballi&family=Montserrat:wght@100&display=swap" rel="stylesheet">
   <link rel="icon" href="images/favicon.ico">
   <link rel="stylesheet" href="css/reset.css">
@@ -19,7 +19,7 @@
   <main>
     <div class="intro-page active">
       <img src="https://thumbs.gfycat.com/LongBeneficialHectorsdolphin-size_restricted.gif" alt="spirited away train" class="intro-image">
-      <div class="row intro-content max-height-100vh">
+      <div class="row intro-content height-100vh">
         <div class="margin-15-0 column-half align-center row">
           <div id="home-page-links-container" class="padding-5 margin-0-15 border-solid background-color-faded-black">
             <div class="row justify-center">
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="column-half row justify-center align-center">
-          <div class="width-50">
+          <div id="intro-carousel-container" class="width-50">
             <img id="intro-img" class="fit-to-container border-solid" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTqTEoJUOlTg4HakvM3SHU0a7a3gFpAQ1HrBL21fBAr1OYOeocP" alt="carousel of ghibli film posters">
             <img id="intro-img-2" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTqTEoJUOlTg4HakvM3SHU0a7a3gFpAQ1HrBL21fBAr1OYOeocP">
           </div>
@@ -48,22 +48,10 @@
     <div data-view="navbar" class="row justify-center hidden">
       <div class="width-100 ">
         <div data-link="navbar-links" class="column-full row justify-between background-color-dark-blue padding-0-100px">
-          <div class="font-size-1-5rem column-two-thirds row">
+          <div id="navbar-link-holder" class="font-size-1-5rem column-two-thirds row">
             <a id="homepage-link" class="hubballi white margin-2-1-2-0 font-size-2rem">Ghiblis</a>
             <a id="films-link" class="blue montserrat font-weight-600 margin-2-1">Films</a>
             <a id="vehicles-link" class="blue montserrat font-weight-600 margin-2-1">Vehicles</a>
-            <a id="characters-link" class="blue montserrat font-weight-600 margin-2-1">Characters</a>
-
-          </div>
-          <div class="column-half padding-2-0 row justify-right align-center">
-            <form class="width-100 height-200 row justify-right align-center">
-              <label class="height-100 width-60 margin-right-2rem ">
-                <input type="text" name="search" id="search" placeholder="Search" class="fit-to-container border-radius-1rem font-size-1-5rem padding-left-1">
-              </label>
-              <label class="height-100 width-25">
-                <button class="montserrat fit-to-container font-size-1-5rem border-radius-1rem lighter-blue background-transparent border-lighter-blue">Search</button>
-              </label>
-            </form>
           </div>
         </div>
       </div>
@@ -92,7 +80,7 @@
       <img src="https://deadline.com/wp-content/uploads/2021/11/img_2947.jpg" alt="chihiro shares riceball with haku" class="single-film-page-background-2">
       <img src="https://i.guim.co.uk/img/media/da01a9959107c4fb0abb65fa8840ae01bbb24dfa/7_81_4761_2856/master/4761.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=4b3d2d2721de19917081a3fe51280c32" alt="princess mononoke riding her wolf" class="single-film-page-background-3">
       <div class="width-1400px position-relative margin-bottom-5">
-        <div class="row">
+        <div id="single-film-description-holder" class="row">
           <div class="column-one-third">
             <div class="hubballi row justify-between">
               <div class="column-two-thirds row align-center">
@@ -103,7 +91,7 @@
                 <i id="rating-button" class="margin-0-15 fa-solid fa-pen-to-square fa-lg"></i>
               </div>
             </div>
-            <div>
+            <div class="row justify-center">
               <img id="single-page-poster" class="fit-to-container" src="https://m.media-amazon.com/images/I/91bzNykBdKL._AC_SY741_.jpg" alt="tmep">
             </div>
           </div>
@@ -146,16 +134,12 @@
         </div>
       </div>
     </div>
-    <div data-view="vehicles-page" class="hidden">
-      <div class="background-color-faded-white margin-25px-0 padding-3-5">
+    <div data-view="vehicles-page" class="hidden position-relative row justify-center">
+      <img src="https://www.whatspaper.com/wp-content/uploads/2021/07/studio-ghibli-wallpaper-whatspaper.jpg" class="vehicles-page-background">
+      <div class="background-color-faded-white padding-3-5 position-relative width-1400px margin-25px-0">
         <h2 class="hubballi font-size-2rem">Vehicles</h2>
-        <div id="vehicles-list" class="row flex-wrap font-size-1-25rem">
+        <div id="vehicles-list" class="row flex-wrap font-size-1-25rem justify-between">
         </div>
-      </div>
-    </div>
-    <div data-view="characters-page">
-      <div class="background-color-faded-white margin-25px-0 padding3-5">
-
       </div>
     </div>
   </main>
