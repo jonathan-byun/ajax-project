@@ -368,6 +368,17 @@ i.fa-pen-to-square:hover {
   overflow-wrap: anywhere;
 }
 
+@media screen and (max-width: 1280px) and (min-width: 769px) {
+  #intro-carousel-container {
+    width: 65%;
+  }
+
+  #intro-img-2 {
+    width: 32.5%;
+    left: 59%;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .column-half {
     flex-basis: 100%;
@@ -403,16 +414,5 @@ i.fa-pen-to-square:hover {
   #single-page-poster {
     width: 75%;
     height: auto;
-  }
-}
-
-@media screen and (max-width: 1280px) {
-  #intro-carousel-container {
-    width: 65%;
-  }
-
-  #intro-img-2 {
-    width: 32.5%;
-    left: 59%;
   }
 }
