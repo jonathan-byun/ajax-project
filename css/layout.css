@@ -61,3 +61,15 @@
 .justify-self-center {
   justify-self: center;
 }
+
+@media screen and (max-width: 768px) {
+  .column-one-fifth {
+    flex-basis: 40%;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .column-one-fifth {
+    flex-basis: 35%;
+  }
+}

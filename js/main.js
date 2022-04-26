@@ -53,7 +53,7 @@ function switchImage() {
 
 function makeNewMovieRow() {
   var newMovieRow = document.createElement('div');
-  newMovieRow.className = 'row justify-around';
+  newMovieRow.className = 'row justify-around flex-wrap';
   return newMovieRow;
 }
 
@@ -106,6 +106,7 @@ function populateVehiclesList() {
   for (let i = 0; i < ghibliVehiclesList.length; i++) {
     const newColumn = document.createElement('div');
     const newText = document.createElement('h2');
+    newText.className = 'margin-2-1';
     newText.textContent = ghibliVehiclesList[i].name;
     newColumn.appendChild(newText);
     $vehiclesList.appendChild(newColumn);
