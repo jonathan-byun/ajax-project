@@ -9,7 +9,7 @@ window.addEventListener('beforeunload', function () {
   localStorage.setItem('ghibli-film-data', filmDataJSON);
 });
 
-// var previousFilmDataJSON = localStorage.getItem('ghibli-film-data');
-// if (previousFilmDataJSON !== null) {
-//   filmData = JSON.parse(previousFilmDataJSON);
-// }
+var previousFilmDataJSON = localStorage.getItem('ghibli-film-data');
+if (previousFilmDataJSON !== null) {
+  filmData = JSON.parse(previousFilmDataJSON);
+}
