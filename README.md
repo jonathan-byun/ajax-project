@@ -1,4 +1,4 @@
-# ajax-project
+# Ghibli Journal
 
 ## A web application for Ghibli Film enthusiasts who want to record their viewing experiences.
 
