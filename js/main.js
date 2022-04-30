@@ -63,14 +63,14 @@ function makeMoviePosterBlock(movie) {
   var posterContainer = document.createElement('div');
   posterContainer.className = 'row align-center justify-between height-2rem';
   movieColumn.appendChild(posterContainer);
-  var movieTitle = document.createElement('h2');
+  var movieTitle = document.createElement('a');
   movieTitle.textContent = movie.title;
-  movieTitle.className = 'cursor-pointer';
+  movieTitle.className = 'cursor-pointer font-size-2rem';
   movieTitle.dataset.filmTitle = movie.title;
   posterContainer.appendChild(movieTitle);
   var rating = document.createElement('h3');
   posterContainer.appendChild(rating);
-  var imageContainer = document.createElement('div');
+  var imageContainer = document.createElement('a');
   imageContainer.className = 'row justify-center';
   movieColumn.appendChild(imageContainer);
   var moviePoster = document.createElement('img');
