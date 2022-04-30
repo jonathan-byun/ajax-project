@@ -243,7 +243,7 @@ function getMovieRating(index) {
 
 function getComments(index) {
   var commentsArray = filmData.comments;
-  if (commentsArray[index] !== undefined) {
+  if (commentsArray[index] !== undefined && commentsArray[index] !== null) {
     for (let i = 0; i < commentsArray[index].storedComments.length; i++) {
       var newCommentDiv = document.createElement('div');
       newCommentDiv.className = 'background-color-light-grey margin-right-2rem border-radius-1rem row justify-between align-center margin-25px-0 comment';
@@ -319,7 +319,7 @@ function submitComment() {
 
 function updateComment(index) {
   var commentsArray = filmData.comments;
-  if (commentsArray[index] !== undefined) {
+  if (commentsArray[index] !== undefined && commentsArray[index] !== null) {
     var arrayOfObjects = commentsArray[index].storedComments;
     var newObject = {
       commentNumber: commentsArray[index].numberOfComments,
