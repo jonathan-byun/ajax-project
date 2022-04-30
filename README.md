@@ -17,8 +17,13 @@
 - Watchers can add comments to films
 - Watchers can delete comments on films
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/ajax.gif "Logo Title Text 1")
+![not loading](images/ajax.gif "Commenting Feature")
 
 ## Reason for Creation
 I myself am a Ghibli film lover and wanted to have a notes journaling experience for those introducing the joys of Ghibli movies to their friends.
 
+## Stretch Features for future Implementation
+- character cards page to click for character details
+
+## System Requirements
+None, should be able to run on barebones
