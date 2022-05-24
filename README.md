@@ -9,6 +9,7 @@
 - CSS3
 - JavaScript ES5
 - Figma
+- Studio Ghibli API
 
 ## Features
 - Watchers can view a list of films
