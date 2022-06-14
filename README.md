@@ -11,6 +11,9 @@
 - Figma
 - Studio Ghibli API
 
+## About API
+The Studio Ghibli API is a REST API that holds film, character, and vehicle information.
+
 ## Features
 - Watchers can view a list of films
 - Watchers can view details of individual films
