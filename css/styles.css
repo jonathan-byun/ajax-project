@@ -106,20 +106,12 @@
   padding: 3rem 5rem;
 }
 
-.padding-2-0 {
-  padding: 2rem 0;
-}
-
 .padding-0-2 {
   padding: 0 2rem;
 }
 
 .padding-0-100px {
   padding: 0 100px;
-}
-
-.padding-left-1 {
-  padding-left: 1rem;
 }
 
 .padding-2-3 {
@@ -134,32 +126,12 @@
   border: solid;
 }
 
-.max-height-100vh {
-  max-height: 100vh;
-}
-
-.width-25 {
-  width: 25%;
-}
-
 .width-50 {
   width: 50%;
 }
 
-.width-60 {
-  width: 60%;
-}
-
-.width-1600px {
-  width: 1600px;
-}
-
 .width-1400px {
   width: 1400px;
-}
-
-.height-200 {
-  height: 200%;
 }
 
 .height-100 {
@@ -184,10 +156,6 @@
 
 .border-radius-1rem {
   border-radius: 1rem;
-}
-
-.border-lighter-blue {
-  border-color: rgb(39, 240, 240);
 }
 
 .background-color-turqoise {
@@ -216,10 +184,6 @@
 
 .blue {
   color: rgb(62, 62, 255);
-}
-
-.lighter-blue {
-  color: rgb(39, 240, 240);
 }
 
 .background-transparent {

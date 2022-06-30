@@ -19,6 +19,8 @@ var xhr = new XMLHttpRequest();
 xhr.open('GET', filmsListUrl);
 xhr.responseType = 'json';
 xhr.addEventListener('load', function () {
+  var element = document.getElementById('loading-container');
+  element.remove();
   ghibliMovies = xhr.response;
   startCarousel();
   populateFilmsList();
@@ -46,6 +48,8 @@ var xhrVehicles = new XMLHttpRequest();
 xhrVehicles.open('GET', 'https://ghibliapi.herokuapp.com/vehicles');
 xhrVehicles.responseType = 'json';
 xhrVehicles.addEventListener('load', function () {
+  var element = document.getElementById('vehicles-loading');
+  element.remove();
   ghibliVehiclesList = xhrVehicles.response;
   populateVehiclesList();
 });
