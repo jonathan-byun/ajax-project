@@ -1,5 +1,18 @@
 /* global filmData */
 var ghibliMovies = [];
+var $filmsContainer = document.querySelector('#films-container');
+const $vehiclesList = document.querySelector('#vehicles-list');
+if (ghibliMovies.length === 0) {
+  var background = document.createElement('div');
+  background.className = 'height-100vh row justify-center';
+  background.id = 'loading-container';
+  var container = document.createElement('div');
+  var loading = document.createElement('div');
+  container.className = 'lds-circle';
+  container.appendChild(loading);
+  background.appendChild(container);
+  $filmsContainer.appendChild(background);
+}
 var ghibliVehiclesList = [];
 var filmsListUrl = 'https://ghibliapi.herokuapp.com/films';
 var xhr = new XMLHttpRequest();
@@ -10,14 +23,41 @@ xhr.addEventListener('load', function () {
   startCarousel();
   populateFilmsList();
 });
+xhr.addEventListener('error', function () {
+  var element = document.getElementById('loading-container');
+  element.remove();
+  var background = document.createElement('div');
+  background.className = 'height-100vh row justify-center';
+  var errorMessage = document.createElement('p');
+  errorMessage.textContent = 'Failed to Load';
+  background.appendChild(errorMessage);
+  $filmsContainer.appendChild(background);
+});
 xhr.send();
 
+if (ghibliVehiclesList.length === 0) {
+  var vehiclesBackground = document.createElement('div');
+  vehiclesBackground.id = 'vehicles-loading';
+  vehiclesBackground.className = 'heigh-100vh row justify-center';
+  vehiclesBackground.appendChild(container);
+  $vehiclesList.appendChild(vehiclesBackground);
+}
 var xhrVehicles = new XMLHttpRequest();
 xhrVehicles.open('GET', 'https://ghibliapi.herokuapp.com/vehicles');
 xhrVehicles.responseType = 'json';
 xhrVehicles.addEventListener('load', function () {
   ghibliVehiclesList = xhrVehicles.response;
   populateVehiclesList();
+});
+xhrVehicles.addEventListener('error', function () {
+  var element = document.getElementById('vehicles-loading');
+  element.remove();
+  var background = document.createElement('div');
+  background.className = 'height-100vh row justify-center';
+  var errorMessage = document.createElement('p');
+  errorMessage.textContent = 'Failed to Load';
+  background.appendChild(errorMessage);
+  $vehiclesList.appendChild(background);
 });
 xhrVehicles.send();
 
@@ -84,7 +124,6 @@ function makeMoviePosterBlock(movie) {
 function populateFilmsList() {
   var rowCounter = 0;
   var movieCounter = 0;
-  var $filmsContainer = document.querySelector('#films-container');
   for (let i = 0; i < ghibliMovies.length; i++) {
     if (rowCounter === 0) {
       var newRow = makeNewMovieRow();
@@ -102,7 +141,6 @@ function populateFilmsList() {
 }
 
 function populateVehiclesList() {
-  const $vehiclesList = document.querySelector('#vehicles-list');
   for (let i = 0; i < ghibliVehiclesList.length; i++) {
     const newColumn = document.createElement('div');
     const newText = document.createElement('h2');
@@ -114,7 +152,6 @@ function populateVehiclesList() {
 }
 
 var $filmsPage = document.querySelector('[data-view="films-page"]');
-var $filmsContainer = document.querySelector('#films-container');
 $filmsContainer.addEventListener('click', goToFilm);
 
 function goToFilm(e) {
