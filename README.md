@@ -2,7 +2,7 @@
 
 ## A web application for Ghibli Film enthusiasts who want to record their viewing experiences.
 
-## [Check out my project here](https://jonathan-byun.github.io/ghibli-journal/) :)
+## [Check out my project here](https://jonathan-byun.github.io/ghibli-journal/) :) (API Outdated :((()
 
 ## Technologies Used
 - HTML5
